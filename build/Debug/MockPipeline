@@ -1,0 +1,140 @@
+GRT_PIPELINE_FILE_V3.0
+PipelineMode: CLASSIFICATION_MODE
+NumPreprocessingModules: 0
+NumFeatureExtractionModules: 0
+NumPostprocessingModules: 0
+Trained: 1
+Info: 
+PreProcessingModuleDatatypes:
+FeatureExtractionModuleDatatypes:
+ClassificationModuleDatatype:	ANBC
+PostProcessingModuleDatatypes:
+GRT_ANBC_MODEL_FILE_V2.0
+Trained: 1
+UseScaling: 0
+NumInputDimensions: 3
+NumOutputDimensions: 0
+NumTrainingIterationsToConverge: 0
+MinNumEpochs: 0
+MaxNumEpochs: 100
+ValidationSetSize: 20
+LearningRate: 0.1
+MinChange: 1e-05
+UseValidationSet: 0
+RandomiseTrainingOrder: 1
+UseNullRejection: 0
+ClassifierMode: 0
+NullRejectionCoeff: 10
+NumClasses: 10
+NullRejectionThresholds:  0 0 0 0 0 0 0 0 0 0
+ClassLabels:  0 1 2 3 4 5 6 7 8 9
+*************_MODEL_*************
+Model_ID: 1
+N: 3
+ClassLabel: 0
+Threshold: -9.30867
+Gamma: 10
+TrainingMu: -0.334549
+TrainingSigma: 0.897412
+Mu:	0.517807	0.5133	0.511083
+Sigma:	0.267225	0.266355	0.282649
+Weights:	1	1	1
+*************_MODEL_*************
+Model_ID: 2
+N: 3
+ClassLabel: 1
+Threshold: -7.67468
+Gamma: 10
+TrainingMu: -0.649687
+TrainingSigma: 0.702499
+Mu:	0.520131	0.469404	0.496674
+Sigma:	0.299313	0.292378	0.316445
+Weights:	1	1	1
+*************_MODEL_*************
+Model_ID: 3
+N: 3
+ClassLabel: 2
+Threshold: -8.22441
+Gamma: 10
+TrainingMu: -0.582694
+TrainingSigma: 0.764171
+Mu:	0.498339	0.502199	0.511335
+Sigma:	0.297889	0.299111	0.290829
+Weights:	1	1	1
+*************_MODEL_*************
+Model_ID: 4
+N: 3
+ClassLabel: 3
+Threshold: -8.53617
+Gamma: 10
+TrainingMu: -0.470882
+TrainingSigma: 0.806529
+Mu:	0.51078	0.554704	0.505839
+Sigma:	0.270569	0.276538	0.309603
+Weights:	1	1	1
+*************_MODEL_*************
+Model_ID: 5
+N: 3
+ClassLabel: 4
+Threshold: -9.48421
+Gamma: 10
+TrainingMu: -0.540985
+TrainingSigma: 0.894322
+Mu:	0.574404	0.540469	0.509838
+Sigma:	0.265189	0.328041	0.286269
+Weights:	1	1	1
+*************_MODEL_*************
+Model_ID: 6
+N: 3
+ClassLabel: 5
+Threshold: -8.52163
+Gamma: 10
+TrainingMu: -0.579649
+TrainingSigma: 0.794198
+Mu:	0.488135	0.460507	0.485815
+Sigma:	0.277825	0.304303	0.30411
+Weights:	1	1	1
+*************_MODEL_*************
+Model_ID: 7
+N: 3
+ClassLabel: 6
+Threshold: -8.07008
+Gamma: 10
+TrainingMu: -0.577113
+TrainingSigma: 0.749297
+Mu:	0.509861	0.543098	0.513486
+Sigma:	0.284422	0.294239	0.306438
+Weights:	1	1	1
+*************_MODEL_*************
+Model_ID: 8
+N: 3
+ClassLabel: 7
+Threshold: -7.85776
+Gamma: 10
+TrainingMu: -0.56499
+TrainingSigma: 0.729277
+Mu:	0.468647	0.531915	0.503201
+Sigma:	0.307686	0.286681	0.288891
+Weights:	1	1	1
+*************_MODEL_*************
+Model_ID: 9
+N: 3
+ClassLabel: 8
+Threshold: -8.15949
+Gamma: 10
+TrainingMu: -0.635619
+TrainingSigma: 0.752387
+Mu:	0.518076	0.522559	0.510234
+Sigma:	0.309178	0.315515	0.278781
+Weights:	1	1	1
+*************_MODEL_*************
+Model_ID: 10
+N: 3
+ClassLabel: 9
+Threshold: -7.73632
+Gamma: 10
+TrainingMu: -0.544975
+TrainingSigma: 0.719134
+Mu:	0.537928	0.457144	0.538849
+Sigma:	0.269947	0.301239	0.305933
+Weights:	1	1	1
