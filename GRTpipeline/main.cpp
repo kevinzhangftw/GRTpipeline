@@ -14,8 +14,17 @@ using namespace std;
 using namespace GRT;
 
 ClassificationData getInput();
+//ANBC
 GestureRecognitionPipeline configureANBCPipeline(ClassificationData trainData, ClassificationData testData);
+//Adaboost
 GestureRecognitionPipeline configureAdaBoostPipeline(ClassificationData trainData, ClassificationData testData);
+//BAG
+GestureRecognitionPipeline configureBAGPipeline(ClassificationData trainData, ClassificationData testData);
+//KNN
+GestureRecognitionPipeline configureKNNPipeline(ClassificationData trainData, ClassificationData testData);
+//GMM
+GestureRecognitionPipeline configureGMMPipeline(ClassificationData trainData, ClassificationData testData);
+//
 GestureRecognitionPipeline configurePipeline(GestureRecognitionPipeline pipeline, ClassificationData trainData, ClassificationData testData);
 
 int main(int argc, const char * argv[]) {
@@ -23,25 +32,38 @@ int main(int argc, const char * argv[]) {
     ClassificationData trainData = getInput();
     
     cout << "Splitting data into training/test split..." << endl;
-    ClassificationData testData = trainData.split(80);
+    ClassificationData testData = trainData.split(50);
     
     //Create a new Gesture Recognition Pipeline using an Adaptive Naive Bayes Classifier
     GestureRecognitionPipeline pipelineANBC = configureANBCPipeline(trainData, testData);
     //Print some stats about the testing
     cout << "ANBC Pipeline Test Accuracy: " << pipelineANBC.getTestAccuracy() << endl;
     
-    //Create a new Gesture Recognition Pipeline using an Adaptive Naive Bayes Classifier
+    //Create a new Gesture Recognition Pipeline using an Adaboost
     GestureRecognitionPipeline pipelineAdaBoost = configureAdaBoostPipeline(trainData, testData);
     //Print some stats about the testing
     cout << "AdaBoost Pipeline Test Accuracy: " << pipelineAdaBoost.getTestAccuracy() << endl;
     
+        //BAG will not function properly
+//    //Create a new Gesture Recognition Pipeline using an Adaboost
+//    GestureRecognitionPipeline pipelineBAG = configureBAGPipeline(trainData, testData);
+//    //Print some stats about the testing
+//    cout << "BAG Pipeline Test Accuracy: " << pipelineBAG.getTestAccuracy() << endl;
+    
+//    GestureRecognitionPipeline pipelineKNN = configureKNNPipeline(trainData, testData);
+//    cout << "KNN Pipeline Test Accuracy: " << pipelineKNN.getTestAccuracy() << endl;
+    
+//    GestureRecognitionPipeline pipelineGMM = configureGMMPipeline(trainData, testData);
+//    cout << "GMM Pipeline Test Accuracy: " << pipelineGMM.getTestAccuracy() << endl;
+
     return 0;
 }
 
 
 ClassificationData getInput(){
     ClassificationData csvData;
-    csvData.load( "classification_data.csv" );
+//    csvData.load( "classification_data.csv" );
+    csvData.load( "traindata.csv" );
     //csvData.printStats();
     cout << "csv formatted classification data OK\n";
     return csvData;
@@ -50,19 +72,56 @@ ClassificationData getInput(){
 GestureRecognitionPipeline configureANBCPipeline(ClassificationData trainData, ClassificationData testData){
     //Create a new Gesture Recognition Pipeline using an Adaptive Naive Bayes Classifier
     GestureRecognitionPipeline pipelineANBC;
-    pipelineANBC.setClassifier( ANBC() );
+    ANBC anbc = ANBC();
+    anbc.enableNullRejection(true);
+    pipelineANBC.setClassifier( anbc );
     pipelineANBC = configurePipeline(pipelineANBC, trainData, testData);
 
     return pipelineANBC;
 }
 
 GestureRecognitionPipeline configureAdaBoostPipeline(ClassificationData trainData, ClassificationData testData){
-    //Create a new Gesture Recognition Pipeline using an Adaptive Naive Bayes Classifier
+    //Create a new Gesture Recognition Pipeline using an AdaBoost
     GestureRecognitionPipeline pipelineAdaBoost;
-    pipelineAdaBoost.setClassifier( AdaBoost() );
+    AdaBoost adaboost = AdaBoost();
+    adaboost.enableNullRejection(true);
+    pipelineAdaBoost.setClassifier( adaboost );
     pipelineAdaBoost = configurePipeline(pipelineAdaBoost, trainData, testData);
     
     return pipelineAdaBoost;
+}
+
+//BAG
+GestureRecognitionPipeline configureBAGPipeline(ClassificationData trainData, ClassificationData testData){
+    //Create a new Gesture Recognition Pipeline using an BAG
+    GestureRecognitionPipeline pipelineBAG;
+    pipelineBAG.setClassifier( BAG() );
+    //TODO: NULL Rejection
+    pipelineBAG = configurePipeline(pipelineBAG, trainData, testData);
+    
+    return pipelineBAG;
+}
+
+//KNN
+GestureRecognitionPipeline configureKNNPipeline(ClassificationData trainData, ClassificationData testData){
+    //Create a new Gesture Recognition Pipeline using an KNN
+    GestureRecognitionPipeline pipelineKNN;
+    KNN knn = KNN();
+    knn.enableNullRejection(true);
+    pipelineKNN.setClassifier( knn );
+    pipelineKNN = configurePipeline(pipelineKNN, trainData, testData);
+    
+    return pipelineKNN;
+}
+//GMM
+GestureRecognitionPipeline configureGMMPipeline(ClassificationData trainData, ClassificationData testData){
+    //Create a new Gesture Recognition Pipeline using an GMM
+    GestureRecognitionPipeline pipelineGMM;
+    //TODO: NULL Rejection
+    pipelineGMM.setClassifier( GMM());
+    pipelineGMM = configurePipeline(pipelineGMM, trainData, testData);
+    
+    return pipelineGMM;
 }
 
 GestureRecognitionPipeline configurePipeline(GestureRecognitionPipeline pipelineInput, ClassificationData trainData, ClassificationData testData){
