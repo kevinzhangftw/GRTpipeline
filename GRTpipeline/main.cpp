@@ -39,18 +39,18 @@ int main(int argc, const char * argv[]) {
 //    GestureRecognitionPipeline pipelineAdaBoost = configureAdaBoostPipeline(trainData, testData);
 //    cout << "AdaBoost Pipeline Test Accuracy: " << pipelineAdaBoost.getTestAccuracy() << endl;
 //
-//    GestureRecognitionPipeline pipelineANBC = configureANBCPipeline(trainData, testData);
-//    cout << "ANBC Pipeline Test Accuracy: " << pipelineANBC.getTestAccuracy() << endl;
-//    
+    GestureRecognitionPipeline pipelineANBC = configureANBCPipeline(trainData, testData);
+    cout << "ANBC Pipeline Test Accuracy: " << pipelineANBC.getTestAccuracy() << endl;
+//
 //    GestureRecognitionPipeline pipelineKNN = configureKNNPipeline(trainData, testData);
 //    cout << "KNN Pipeline Test Accuracy: " << pipelineKNN.getTestAccuracy() << endl;
     
 //    GestureRecognitionPipeline pipelineGMM = configureGMMPipeline(trainData, testData);
 //    cout << "GMM Pipeline Test Accuracy: " << pipelineGMM.getTestAccuracy() << endl;
 //    
-    GestureRecognitionPipeline pipelineMinDist = configureMinDistPipeline(trainData, testData);
-    cout << "MinDist Pipeline Test Accuracy: " << pipelineMinDist.getTestAccuracy() << endl;
-    
+//    GestureRecognitionPipeline pipelineMinDist = configureMinDistPipeline(trainData, testData);
+//    cout << "MinDist Pipeline Test Accuracy: " << pipelineMinDist.getTestAccuracy() << endl;
+//    
     
     return 0;
 }
@@ -70,6 +70,7 @@ GestureRecognitionPipeline configureANBCPipeline(ClassificationData trainData, C
     GestureRecognitionPipeline pipelineANBC;
     ANBC anbc = ANBC();
     anbc.enableNullRejection(true);
+    anbc.setNullRejectionCoeff(2.5);
     pipelineANBC.setClassifier( anbc );
     pipelineANBC = configurePipeline(pipelineANBC, trainData, testData);
 
@@ -81,6 +82,7 @@ GestureRecognitionPipeline configureAdaBoostPipeline(ClassificationData trainDat
     GestureRecognitionPipeline pipelineAdaBoost;
     AdaBoost adaboost = AdaBoost();
     adaboost.enableNullRejection(true);
+    adaboost.setNullRejectionCoeff(0.5);
     pipelineAdaBoost.setClassifier( adaboost );
     pipelineAdaBoost = configurePipeline(pipelineAdaBoost, trainData, testData);
     
@@ -143,13 +145,13 @@ GestureRecognitionPipeline configurePipeline(GestureRecognitionPipeline pipeline
     }
     
     //Save the pipeline to a file
-    if( !pipelineConfigured.save( "MinDistPipeline" ) ){
+    if( !pipelineConfigured.save( "4classANBCPipeline" ) ){
         cout << "ERROR: Failed to save the pipeline!\n";
         //return EXIT_FAILURE;
     }
     
     //Load the pipeline from a file
-    if( !pipelineConfigured.load( "MinDistPipeline" ) ){
+    if( !pipelineConfigured.load( "4classANBCPipeline" ) ){
         cout << "ERROR: Failed to load the pipeline!\n";
         //return EXIT_FAILURE;
     }
