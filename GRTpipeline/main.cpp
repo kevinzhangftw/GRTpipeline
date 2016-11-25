@@ -30,32 +30,12 @@ GestureRecognitionPipeline configurePipeline(GestureRecognitionPipeline pipeline
 int main(int argc, const char * argv[]) {
     //input
     ClassificationData trainData = getInput();
-    
-    cout << "Splitting data into training/test split..." << endl;
-    ClassificationData testData = trainData.split(50);
-    
-    //Create a new Gesture Recognition Pipeline using an Adaptive Naive Bayes Classifier
-    GestureRecognitionPipeline pipelineANBC = configureANBCPipeline(trainData, testData);
-    //Print some stats about the testing
-    cout << "ANBC Pipeline Test Accuracy: " << pipelineANBC.getTestAccuracy() << endl;
+    ClassificationData testData = trainData.split(80);
     
     //Create a new Gesture Recognition Pipeline using an Adaboost
     GestureRecognitionPipeline pipelineAdaBoost = configureAdaBoostPipeline(trainData, testData);
-    //Print some stats about the testing
     cout << "AdaBoost Pipeline Test Accuracy: " << pipelineAdaBoost.getTestAccuracy() << endl;
     
-        //BAG will not function properly
-//    //Create a new Gesture Recognition Pipeline using an Adaboost
-//    GestureRecognitionPipeline pipelineBAG = configureBAGPipeline(trainData, testData);
-//    //Print some stats about the testing
-//    cout << "BAG Pipeline Test Accuracy: " << pipelineBAG.getTestAccuracy() << endl;
-    
-//    GestureRecognitionPipeline pipelineKNN = configureKNNPipeline(trainData, testData);
-//    cout << "KNN Pipeline Test Accuracy: " << pipelineKNN.getTestAccuracy() << endl;
-    
-//    GestureRecognitionPipeline pipelineGMM = configureGMMPipeline(trainData, testData);
-//    cout << "GMM Pipeline Test Accuracy: " << pipelineGMM.getTestAccuracy() << endl;
-
     return 0;
 }
 
@@ -64,7 +44,7 @@ ClassificationData getInput(){
     ClassificationData csvData;
 //    csvData.load( "classification_data.csv" );
     csvData.load( "traindata.csv" );
-    //csvData.printStats();
+    csvData.printStats();
     cout << "csv formatted classification data OK\n";
     return csvData;
 }
@@ -134,13 +114,13 @@ GestureRecognitionPipeline configurePipeline(GestureRecognitionPipeline pipeline
     }
     
     //Save the pipeline to a file
-    if( !pipelineConfigured.save( "MockPipeline" ) ){
+    if( !pipelineConfigured.save( "PipelineToTest" ) ){
         cout << "ERROR: Failed to save the pipeline!\n";
         //return EXIT_FAILURE;
     }
     
     //Load the pipeline from a file
-    if( !pipelineConfigured.load( "MockPipeline" ) ){
+    if( !pipelineConfigured.load( "PipelineToTest" ) ){
         cout << "ERROR: Failed to load the pipeline!\n";
         //return EXIT_FAILURE;
     }
