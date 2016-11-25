@@ -24,6 +24,9 @@ GestureRecognitionPipeline configureBAGPipeline(ClassificationData trainData, Cl
 GestureRecognitionPipeline configureKNNPipeline(ClassificationData trainData, ClassificationData testData);
 //GMM
 GestureRecognitionPipeline configureGMMPipeline(ClassificationData trainData, ClassificationData testData);
+//MinDist
+GestureRecognitionPipeline configureMinDistPipeline(ClassificationData trainData, ClassificationData testData);
+
 //
 GestureRecognitionPipeline configurePipeline(GestureRecognitionPipeline pipeline, ClassificationData trainData, ClassificationData testData);
 
@@ -33,8 +36,21 @@ int main(int argc, const char * argv[]) {
     ClassificationData testData = trainData.split(80);
     
     //Create a new Gesture Recognition Pipeline using an Adaboost
-    GestureRecognitionPipeline pipelineAdaBoost = configureAdaBoostPipeline(trainData, testData);
-    cout << "AdaBoost Pipeline Test Accuracy: " << pipelineAdaBoost.getTestAccuracy() << endl;
+//    GestureRecognitionPipeline pipelineAdaBoost = configureAdaBoostPipeline(trainData, testData);
+//    cout << "AdaBoost Pipeline Test Accuracy: " << pipelineAdaBoost.getTestAccuracy() << endl;
+//
+//    GestureRecognitionPipeline pipelineANBC = configureANBCPipeline(trainData, testData);
+//    cout << "ANBC Pipeline Test Accuracy: " << pipelineANBC.getTestAccuracy() << endl;
+//    
+//    GestureRecognitionPipeline pipelineKNN = configureKNNPipeline(trainData, testData);
+//    cout << "KNN Pipeline Test Accuracy: " << pipelineKNN.getTestAccuracy() << endl;
+    
+//    GestureRecognitionPipeline pipelineGMM = configureGMMPipeline(trainData, testData);
+//    cout << "GMM Pipeline Test Accuracy: " << pipelineGMM.getTestAccuracy() << endl;
+//    
+    GestureRecognitionPipeline pipelineMinDist = configureMinDistPipeline(trainData, testData);
+    cout << "MinDist Pipeline Test Accuracy: " << pipelineMinDist.getTestAccuracy() << endl;
+    
     
     return 0;
 }
@@ -86,7 +102,7 @@ GestureRecognitionPipeline configureBAGPipeline(ClassificationData trainData, Cl
 GestureRecognitionPipeline configureKNNPipeline(ClassificationData trainData, ClassificationData testData){
     //Create a new Gesture Recognition Pipeline using an KNN
     GestureRecognitionPipeline pipelineKNN;
-    KNN knn = KNN();
+    KNN knn = KNN(6);
     knn.enableNullRejection(true);
     pipelineKNN.setClassifier( knn );
     pipelineKNN = configurePipeline(pipelineKNN, trainData, testData);
@@ -97,11 +113,24 @@ GestureRecognitionPipeline configureKNNPipeline(ClassificationData trainData, Cl
 GestureRecognitionPipeline configureGMMPipeline(ClassificationData trainData, ClassificationData testData){
     //Create a new Gesture Recognition Pipeline using an GMM
     GestureRecognitionPipeline pipelineGMM;
-    //TODO: NULL Rejection
-    pipelineGMM.setClassifier( GMM());
+    GMM gmm = GMM();
+    gmm.enableNullRejection(true);
+    pipelineGMM.setClassifier( gmm );
     pipelineGMM = configurePipeline(pipelineGMM, trainData, testData);
     
     return pipelineGMM;
+}
+
+//MinDist
+GestureRecognitionPipeline configureMinDistPipeline(ClassificationData trainData, ClassificationData testData){
+    //Create a new Gesture Recognition Pipeline using an GMM
+    GestureRecognitionPipeline pipelineMinDist;
+    MinDist mindist = MinDist();
+    mindist.enableNullRejection(true);
+    pipelineMinDist.setClassifier( mindist );
+    pipelineMinDist = configurePipeline(pipelineMinDist, trainData, testData);
+    
+    return pipelineMinDist;
 }
 
 GestureRecognitionPipeline configurePipeline(GestureRecognitionPipeline pipelineInput, ClassificationData trainData, ClassificationData testData){
@@ -114,13 +143,13 @@ GestureRecognitionPipeline configurePipeline(GestureRecognitionPipeline pipeline
     }
     
     //Save the pipeline to a file
-    if( !pipelineConfigured.save( "PipelineToTest" ) ){
+    if( !pipelineConfigured.save( "MinDistPipeline" ) ){
         cout << "ERROR: Failed to save the pipeline!\n";
         //return EXIT_FAILURE;
     }
     
     //Load the pipeline from a file
-    if( !pipelineConfigured.load( "PipelineToTest" ) ){
+    if( !pipelineConfigured.load( "MinDistPipeline" ) ){
         cout << "ERROR: Failed to load the pipeline!\n";
         //return EXIT_FAILURE;
     }
